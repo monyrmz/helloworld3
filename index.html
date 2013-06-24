@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-type" content="text/html;
-charset=utf-8">
-<meta name="viewport" id="viewport"
-content="width=device-width, height=device-height,
-initial-scale=1.0, maximum-scale=1.0,
-user-scalable=no;" />
-<script type="text/javascript" charset="utf-8"
-src="phonegap.js"></script>
-<script type="text/javascript" charset="utf-8">
-function onBodyLoad() {
-document.addEventListener("deviceready", onDeviceReady,
-false);
-}
-function onDeviceReady() {
-//Get the appInfo DOM element
-var element = document.getElementById('appInfo');
-//replace it with specific information about the device
-//running the application
-element.innerHTML = 'PhoneGap (version ' +
-device.phonegap + ')<br />' + device.platform + ' ' +
-device.name + ' (version ' + device.version + ').';
-}
-</script>
-</head>
-<body onload="onBodyLoad()">
-<h1>HelloWorld3</h1>
-<p>This is a PhoneGap application that makes calls to the
-PhoneGap APIs.</p>
-<p id="appInfo">Waiting for PhoneGap Initialization to
-complete</p>
-</body>
+  <head>
+    <title>Ejemplo de Capture</title>
+
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script type="text/javascript" charset="utf-8" src="json2.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Llamado cuando el proceso de captura finalice
+    //
+	
+function captureSuccess(mediaFiles) {
+    var i, path, len;
+    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+        path = mediaFiles[i].fullPath;
+        // do something interesting with the file
+    }
+};
+
+    // Llamado si ocurre algún error
+    // 
+    function captureError(error) {
+        var msg = 'Ocurrió un error mientras se capturaba: ' + error.code;
+        navigator.notification.alert(msg, null, 'Uh oh!');
+    }
+
+    // Un botón llamara esta función
+    //
+    function capturaVideo() {
+        // Inicia la aplicación de grabación
+        // y permite capturar hasta 2 clips de vídeo
+        navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 1});
+    }
+
+  
+
+    </script>
+    </head>
+    <body onload="onBodyLoad()">
+        <button onclick="capturaVideo();">Capturar de vídeo</button> <br>
+    </body>
 </html>
